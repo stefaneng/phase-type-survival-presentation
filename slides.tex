@@ -109,19 +109,59 @@ f(x; \lambda) = \begin{cases}
 $$
 \end{frame}
 
-% \begin{frame}{Discrete Markov Chain}
+\begin{frame}{Limiting Distribution}
+    \begin{defn}
+    If $X_n$ and $X$ are random variables with cumulative distribution functions $F_n$ and $F$ then $X_n$ approaches in distribution to $X$, notated $X_n \Rightarrow X$, if
+    $$
+    \lim_{n \to \infty} F_n(x) = F(x)
+    $$
+    \end{defn}  
+    
+    \begin{example}[Central Limit Theorem]
+        Let $X_1, \ldots, X_n$ be i.i.d random variables with $E[X_i] = \mu$ and finite variance $\Var(X_i) = \sigma^2$. Then
+        $$
+        {\frac {{\bar {X}}_{n}-\mu }{\sigma /\sqrt{n}}} \Rightarrow N(0, \sigma^2)
+        $$
+        as $n \to \infty$
+    \end{example}
+    % TODO: Add example of limiting distribution
+\end{frame}
 
-% A stochastic process $(X_n)$ with countable or discrete state space $S$ is a (discrete) \textbf{Markov chain} if
-%     $$
-% P(X_{n + 1} = s | X_n = x, \ldots, X_0 = x_0) = P(X_{n + 1} = s | X_n = x)
-% $$
-% for all $n \geq 1$ and $s, x, x_{n-1}, \ldots, x_0 \in S$.
+\begin{frame}{Discrete Markov Chain}
 
-% and \textbf{time homogeneous} if
-% $$
-% P(X_{n + 1} = j | X_n = i) = P(X_{1} = j | X_0 = i)
-% $$
-% \end{frame}
+A stochastic process $(X_n)$ with countable or discrete state space $S$ is a (discrete) \textbf{Markov chain} if
+    $$
+P(X_{n + 1} = s | X_n = x, \ldots, X_0 = x_0) = P(X_{n + 1} = s | X_n = x)
+$$
+for all $n \geq 1$ and $s, x, x_{n-1}, \ldots, x_0 \in S$.
+
+and \textbf{time homogeneous} if
+$$
+P(X_{n + 1} = j | X_n = i) = P(X_{1} = j | X_0 = i)
+$$
+\end{frame}
+
+\begin{frame}{Graphical Representation of Discrete Markov Chain}
+    \begin{figure}[H]
+    \centering
+   \begin{tikzpicture}[start chain = going right,
+   -Triangle, every loop/.append style = {-Triangle}]
+   
+   \tikzset{node style/.style={state, 
+                            minimum width=2cm}}
+   
+   \node[node style] at (0, 0)     (2)     {Healthy};
+   \node[node style] at (6, 0)     (1)     {Diseased};
+   \node[node style] at (3, -4) (0) {Dead};
+
+   \draw (2) edge[bend left] node[yshift=3mm]{$p_1$} (1);
+   \draw (1) edge[bend left] node[yshift=-3mm]{$p_2$}(2);
+   \draw (2) edge[left] node[xshift=-3mm]{$1 - p_1$} (0);
+   %
+   \draw (1) edge[left] node[xshift=15mm]{$1 - p_2$} (0);
+   \end{tikzpicture}
+\end{figure}   
+\end{frame}
 
 \begin{frame}{Continuous-time Markov Chain}
 The process $(X(t))$ is a \textbf{continuous-time Markov chain} (CTMC) with index set $\mathbb T$ (assumed to be $[0, \infty)$) and finite or countable state space $S$ if
@@ -153,10 +193,32 @@ for all $t_1, \ldots, t_n \in \mathbb T$, with $t_1 < \cdots < t_n$ and $i_1,\ld
     $$
     \item If we are in state $i$ then the chain remains in state $i$ for an exponentially distributed time with rate $-q_{ii}$ before changing to another state $j$.
 \end{itemize}
+\end{frame}
 
+\begin{frame}{Graphical Representation of CTMC}
+A graphical representation of a continuous-time Markov chain representing the illness-death model.
+    \begin{figure}[H]
+    \centering
+   \begin{tikzpicture}[start chain = going right,
+   -Triangle, every loop/.append style = {-Triangle}]
+   
+   \tikzset{node style/.style={state, 
+                            minimum width=2cm}}
+   
+   \node[node style] at (0, 0)     (2)     {Healthy};
+   \node[node style] at (6, 0)     (1)     {Diseased};
+   \node[node style] at (3, -4) (0) {Dead};
+
+   \draw (2) edge[left] node[yshift=3mm]{$\lambda_1$} (1);
+   \draw (2) edge[left] node[xshift=-3mm]{$\lambda_2$} (0);
+   %
+   \draw (1) edge[left] node[xshift=15mm]{$\lambda_3$} (0);
+   \end{tikzpicture}
+   \caption{Continuous-time Markov chain for illness-death model}
+    \end{figure}   
+\end{frame}
 
 % with probability $-\frac{q_{ij}}{q_{ii}}$.
-\end{frame}
 
 \begin{frame}{Embedded Markov Chain}
 \begin{itemize}
@@ -171,39 +233,39 @@ for all $t_1, \ldots, t_n \in \mathbb T$, with $t_1 < \cdots < t_n$ and $i_1,\ld
 \end{itemize}
 \end{frame}
 
-% \begin{frame}{Example State space diagrams}
-%     \begin{figure}[H]
-%     \centering
-%   \begin{tikzpicture}[start chain = going right,
-%   -Triangle, every loop/.append style = {-Triangle}]
-%   \node[state, on chain]  (2) {2};
-%   \node[state, on chain]  (1) {1};
-%   \node[state, on chain]  (0) {0};
+\begin{frame}{Example State space diagrams}
+    \begin{figure}[H]
+    \centering
+  \begin{tikzpicture}[start chain = going right,
+  -Triangle, every loop/.append style = {-Triangle}]
+  \node[state, on chain]  (2) {2};
+  \node[state, on chain]  (1) {1};
+  \node[state, on chain]  (0) {0};
 
-%   \draw (2) edge[bend left] node[yshift=3mm]{$1$} (1);
-%   \draw (1) edge[bend left] node[yshift=-3mm]{$\mu$}(2);
-%   \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$\lambda$} (0);
+  \draw (2) edge[bend left] node[yshift=3mm]{$1$} (1);
+  \draw (1) edge[bend left] node[yshift=-3mm]{$\mu$}(2);
+  \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$\lambda$} (0);
 
-% \end{tikzpicture}
-%     \caption{Rates for a continuous time Markov chain on $S = \{0,1,2\}$}
-% \end{figure}
+\end{tikzpicture}
+    \caption{Rates for a continuous time Markov chain on $S = \{0,1,2\}$}
+\end{figure}
 
-% \begin{figure}[H]
-%     \centering
-%   \begin{tikzpicture}[start chain = going right,
-%   -Triangle, every loop/.append style = {-Triangle}]
-%   \node[state, on chain]  (2) {2};
-%   \node[state, on chain]  (1) {1};
-%   \node[state, on chain]  (0) {0};
+\begin{figure}[H]
+    \centering
+  \begin{tikzpicture}[start chain = going right,
+  -Triangle, every loop/.append style = {-Triangle}]
+  \node[state, on chain]  (2) {2};
+  \node[state, on chain]  (1) {1};
+  \node[state, on chain]  (0) {0};
 
-%   \draw (2) edge[bend left] node[yshift=3mm]{$1$} (1);
-%   \draw (1) edge[bend left] node[yshift=-3mm]{$\frac{\mu}{\mu + \lambda}$}(2);
-%   \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$\frac{\lambda}{\mu + \lambda}$} (0);
+  \draw (2) edge[bend left] node[yshift=3mm]{$1$} (1);
+  \draw (1) edge[bend left] node[yshift=-3mm]{$\frac{\mu}{\mu + \lambda}$}(2);
+  \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$\frac{\lambda}{\mu + \lambda}$} (0);
 
-% \end{tikzpicture}
-%     \caption{Embedded Markov chain}
-% \end{figure}
-% \end{frame}
+\end{tikzpicture}
+    \caption{Embedded Markov chain}
+\end{figure}
+\end{frame}
 
 % \begin{frame}
 %     \begin{theorem} \label{thm:geom_sum_exp}
@@ -346,6 +408,24 @@ A mixture of 3 exponential distributions with rates $\lambda_1, \lambda_2, \lamb
 \end{align*}
 \end{frame}
 
+\begin{frame}{Example - Coxian Distribution}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/coxian_distribution.png}
+    \caption{Coxian Distribution with 5 transient states}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Example - Coxian Distribution}
+A Coxian distribution has the following parameters for a phase-type distribution:
+An initial distribution $\boldsymbol{\alpha} = (1, 0, 0, \ldots, 0)$ and
+    $$
+    S = \left[{\begin{matrix}-\lambda _{{1}}&p_{{1}}\lambda _{{1}}&0&\dots &0&0\\0&-\lambda _{{2}}&p_{{2}}\lambda _{{2}}&\ddots &0&0\\\vdots &\ddots &\ddots &\ddots &\ddots &\vdots \\0&0&\ddots &-\lambda _{{k-2}}&p_{{k-2}}\lambda _{{k-2}}&0\\0&0&\dots &0&-\lambda _{{k-1}}&p_{{k-1}}\lambda _{{k-1}}\\0&0&\dots &0&0&-\lambda _{{k}}\end{matrix}}\right]
+    $$
+with
+$\mathbf{S}_0 = ((1 - p_1)\lambda_1, (1 - p_2)\lambda_2, \ldots, (1 - p_{k - 1}) \lambda_{k - 1}, \lambda_k)^T$
+\end{frame}
+
 % \begin{frame}{Example - Erlang}
 % The Erlang distribution (gamma with integer valued parameter) is a phase-type distribution.
 % Assume we have an Erlang distribution with shape $4$ and rate $\lambda$.
@@ -376,6 +456,237 @@ A mixture of 3 exponential distributions with rates $\lambda_1, \lambda_2, \lamb
 % \end{theorem}
 % \end{frame}
 
+\section{Contact Process}
+
+\begin{frame}
+\begin{itemize}
+    \item The contact process $(\eta_t)$, is a continuous-time Markov chain
+    \item Let $G = (V,E)$ be a graph with finite or countably infinite vertices
+    \item The state space is $S = \{0,1\}^V$
+    \item Infection rate $\lambda$
+    % \item Each 1 on the graph waits an exponentially distributed random time with rate 1 and then becomes a 0.
+    % \item Every 0 waits an exponentially distributed random time with rate $k \lambda$, where $k$ is the number of edges shared with a 1.
+    % \item Project the contact process to the number of ones in the configuration
+    \item Denote the extinction/absorption time as $\tau_{G}$
+    \item If $S$ is finite, the transition rates can be described as follows
+$$
+q(\eta, \eta_x) = \begin{cases}
+    1 & \text{if } \eta(x) = 1\\
+    \lambda |\{ (x,y) \in E : \eta(y) = 1\}| & \text{if } \eta(x) = 0
+\end{cases}
+$$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Contact Process Supercritical Case}
+    \begin{figure}[H]
+  \centering
+    \includegraphics[width=.65\textwidth]{figures/contact_simulation_torus_25.png}
+   \caption{Simulation for contact process with $\lambda = 4$ and periodic boundary conditions on $50 \times 50$ grid.}
+  \label{fig:contact_sim_torus_above_crit.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact Process Subcritical Case}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.65\textwidth]{figures/contact_simulation_torus_25_below_crit.png}
+   \caption{Simulation for contact process with $\lambda = 0.25$ on $\{0,1\}^{(\Z/50) \times (\Z/50)}$.}
+  \label{fig:contact_sim_torus_below_crit.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact process 2 nodes}
+The contact process with infection rate $\lambda$ on the finite graph with two nodes and one edge between them has the following transition rates
+
+\begin{align*}
+    1 &\to 0 \text{ at rate } 1\\
+    0 &\to 1 \text{ at rate } \begin{cases}
+        \lambda & \text{ if neighbor is 1}\\
+        0 & \text{ otherwise}
+    \end{cases}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Contact process 2 nodes projection}
+Project the Markov chain to the number of 1's on the graph.
+There are 3 states for this process.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{figures/contact_process_projection.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact process 2 nodes projection}
+This new projected continuous-time Markov chain has the following graphical representation.
+\begin{figure}
+    \centering
+   \begin{tikzpicture}[start chain = going right,
+   -Triangle, every loop/.append style = {-Triangle}]
+   \node[state, on chain]  (2) {2};
+   \node[state, on chain]  (1) {1};
+   \node[state, on chain]  (0) {0};
+
+   \draw (2) edge[bend left] node[yshift=3mm]{$2$} (1);
+   \draw (1) edge[bend left] node[yshift=-3mm]{$\lambda$}(2);
+   \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$1$} (0);
+
+\end{tikzpicture}
+\caption{Projection states for the 2 node contact process}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact Process $n = 2$ Phase-type distribution}
+$$
+    \mathbf{S} = \begin{pmatrix}
+        -2 & 2\\
+        \lambda & - (1 + \lambda)
+    \end{pmatrix}, \quad
+    \mathbf{S}_0 = \begin{pmatrix}
+        0\\
+        1
+    \end{pmatrix}, \quad
+    \boldsymbol{\alpha} = \begin{pmatrix}
+    1 & 0
+    \end{pmatrix}
+$$
+then
+\begin{align*}
+ f(x; \lambda) &= \boldsymbol{\alpha} \exp(x \mathbf{S}) \mathbf{S}_0\\
+ &= \frac{2}{C} \left( e^{\frac{1}{2}(-3 - \lambda + C) x} - e^{\frac{1}{2}(-3 - \lambda - C) x} \right)
+\end{align*}
+where
+$$
+C = \sqrt{\lambda^2 + 6 \lambda + 1}
+$$
+\end{frame}
+
+\begin{frame}{Contact process 2 node Phase-type density}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.80\textwidth]{figures/complete_2_contact_phase_densities.png}
+   \caption{Density functions for $\tau_{K_2}$ for $\lambda = 0, 1, 2, 3, 4$}
+  \label{fig:contact_2_phase_densities}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact process 2 nodes}
+We can express $\tau_{K_2}$ as a random sum
+$$
+\tau_{K_2} = \sum_{i = 1}^N (X_i + Y_i)
+$$
+where 
+\begin{itemize}
+    \item $X_1, X_2, \ldots$ be i.i.d random variables with
+$X_i \sim \exp(2)$ for the waiting time at state 2
+    \item $Y_1, Y_2, \ldots$ with  $Y_i \sim \exp(1 + \lambda)$ (independent of $(X_n)$)
+    \item $N$ is independent of both $(X_n)$ and $(Y_n)$
+    \item $\tau_{K_2} \Rightarrow \infty$ as $\lambda \to \infty$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Limiting Distribution}
+$$
+\tau_{K_2} = \sum_{i = 1}^N X_i +  \sum_{i = 1}^N  Y_i
+$$
+where
+$$
+X_i \sim \exp(2),\quad Y_i \sim \exp(1 + \lambda),\quad N \sim \operatorname{Geom}\left(\frac{1}{1 + \lambda}\right)
+$$
+
+\begin{align*}
+    \sum_{i = 1}^N X_i &\sim \exp\left( \frac{2}{1 + \lambda} \right) && \frac{2}{1 + \lambda}\sum_{i = 1}^N X_i \sim \exp( 1 ) \\
+    \sum_{i = 1}^N Y_i &\sim \exp( 1 ) &&\frac{2}{1 + \lambda}\sum_{i = 1}^N Y_i \sim \exp \left( \frac{1 + \lambda}{2} \right) \Rightarrow 0
+\end{align*}
+as $\lambda \to \infty$. Therefore
+$$
+\frac{2}{1 + \lambda} \tau_{K_2} \Rightarrow \exp(1) \text{ as } \lambda \to \infty
+$$
+
+\end{frame}
+
+\begin{frame}{Contact process 3 node phase-type density}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.80\textwidth]{figures/complete_3_contact_phase_densities.png}
+   \caption{Density functions for $\tau_{K_3}$ for $\lambda = 0, 1, 2, 3, 4$ on the complete three node contact process}
+  \label{fig:contact_3_phase_densities}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact process $n$ node}
+    \begin{figure}[H]
+    \centering
+   \begin{tikzpicture}[
+   start chain = going right,
+   -Triangle,
+   every loop/.append style = {-Triangle}]
+   \node[state, on chain]  (n) {n};
+   \node[state, on chain]  (n1) {n - 1};
+   \node[state without output/.append style={draw=none}, on chain]  (dots1) {...};
+   \node[state, on chain]  (2) {2};
+   \node[state, on chain]  (1) {1};
+   \node[state, on chain]  (0) {0};
+
+   \draw (n) edge[bend left] node[yshift=3mm]{$n$} (n1);
+   \draw (n1) edge[bend left] node[yshift=-3mm]{$1 (n - 1) \lambda$}(n);
+
+
+   \draw (n1) edge[left] node[xshift=3mm, yshift=-3mm]{} (dots1);
+
+   \draw (dots1) edge[left] node[xshift=3mm, yshift=-3mm]{} (2);
+
+  \draw (2) edge[bend left] node[yshift=3mm]{$2$} (1);
+   \draw (1) edge[bend left] node[yshift=-3mm]{$(n - 1)1 \lambda$}(2);
+
+  \draw (1) edge[left] node[yshift=3mm]{$1$} (0);
+\end{tikzpicture}
+    \caption{Transition rates for N node complete contact process}
+    \label{fig:complete_contact_n_node_rates}
+\end{figure}
+
+\begin{align*}
+    i \to i - 1 &= \begin{cases}
+        0 & i \in 0\\
+        i & i \in \{1,\ldots, n\}
+    \end{cases}\\
+    i \to i + 1 &= \begin{cases}
+        0 & i = i \in \{0, n\}\\
+        i(n - i) \lambda & i \in \{1,\ldots, n-1\}
+    \end{cases}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Contact Process Limiting Distribution}
+    Let $\tau_{K_n}$ be the time until we reach state zero.
+Now let $N_1, N_2, \ldots, N_n$ be the number of visits to states $1, 2, \ldots, n$ respectively.
+
+For all $i = 1,2,\ldots, N_i$, $j = 1,2,\ldots, n$ and let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting times at each state.
+
+Since we are concerned with the limiting distribution we can instead focus on the rates up to a constant
+$$
+E[X_i^{(j)}] = E[X^{(j)}] \propto \begin{cases}
+  1 & j = n\\
+  \frac{1}{1 + \lambda} & j \in \{1,\ldots, k - 1\}\\
+\end{cases}
+$$
+\end{frame}
+
+\begin{frame}{Contact Process Limiting Distribution}
+We can again represent $\tau_{K_n}$ as random sums
+
+\begin{equation*}\label{eq:wait_contact_sum}
+    \tau_{K_n} = \sum_{i = 1}^{N_n} X_i^{(n)} + \sum_{i = 1}^{N_{n - 1}} X_i^{(n - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}
+\end{equation*}
+
+Then the limiting distribution as $\lambda \to \infty$ is
+$$
+\frac{\tau_{K_n}}{E[N_{n}]E[X^{(n)}]} \Rightarrow \exp(1)
+$$
+\end{frame}
+
 \section{Voter Model}
 
 \begin{frame}{Voter Model}
@@ -386,7 +697,7 @@ A mixture of 3 exponential distributions with rates $\lambda_1, \lambda_2, \lamb
     \item Let $P$ be a transition probability matrix for a Markov chain on $G$
     \item We assume that for all $x,y \in V$
     $$
-    P(x,y) = P(y,x) = \frac{1}{\deg(x)}
+    P(x,y) = \frac{1}{\deg(y)}
     $$
 \end{itemize}
 \end{frame}
@@ -641,223 +952,15 @@ Where $H_n$ is the $n$th harmonic number $H_n = \sum_{k = 1}^n \frac{1}{k}$
 For large $n$, $E[\tau_{K_n}] \approx ln(2) (n - 1)$ since $\lim_{n \to \infty} [H_n - ln(n)] = \gamma = 0.577$
 \end{frame}
 
+\section{Multi-State Models}
 
-\section{Contact Process}
-
-\begin{frame}
+\begin{frame}{Multi-State Models}
 \begin{itemize}
-    \item The contact process $(\eta_t)$, is a continuous-time Markov chain
-    \item Let $G = (V,E)$ be a graph with finite or countably infinite vertices
-    \item The state space is $S = \{0,1\}^V$
-    \item Infection rate $\lambda$
-    % \item Each 1 on the graph waits an exponentially distributed random time with rate 1 and then becomes a 0.
-    % \item Every 0 waits an exponentially distributed random time with rate $k \lambda$, where $k$ is the number of edges shared with a 1.
-    % \item Project the contact process to the number of ones in the configuration
-    \item Denote the extinction/absorption time as $\tau_{G}$
-    \item If $S$ is finite, the transition rates can be described as follows
-$$
-q(\eta, \eta_x) = \begin{cases}
-    1 & \text{if } \eta(x) = 1\\
-    \lambda |\{ (x,y) \in E : \eta(y) = 1\}| & \text{if } \eta(x) = 0
-\end{cases}
-$$
+    \item Standard survival analysis assumes that the response is dichotomous.
+    \item Multi-state models replace 
 \end{itemize}
 
-\end{frame}
 
-\begin{frame}{Contact Process Supercritical Case}
-    \begin{figure}[H]
-  \centering
-    \includegraphics[width=.65\textwidth]{figures/contact_simulation_torus_25.png}
-   \caption{Simulation for contact process with $\lambda = 4$ and periodic boundary conditions on $50 \times 50$ grid.}
-  \label{fig:contact_sim_torus_above_crit.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Contact Process Subcritical Case}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.65\textwidth]{figures/contact_simulation_torus_25_below_crit.png}
-   \caption{Simulation for contact process with $\lambda = 0.25$ on $\{0,1\}^{(\Z/50) \times (\Z/50)}$.}
-  \label{fig:contact_sim_torus_below_crit.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Contact process 2 nodes}
-The contact process with infection rate $\lambda$ on the finite graph with two nodes and one edge between them has the following transition rates
-
-\begin{align*}
-    1 &\to 0 \text{ at rate } 1\\
-    0 &\to 1 \text{ at rate } \begin{cases}
-        \lambda & \text{ if neighbor is 1}\\
-        0 & \text{ otherwise}
-    \end{cases}
-\end{align*}
-
-\begin{figure}
-    \centering
-   \begin{tikzpicture}[start chain = going right,
-   -Triangle, every loop/.append style = {-Triangle}]
-   \node[state, on chain]  (2) {2};
-   \node[state, on chain]  (1) {1};
-   \node[state, on chain]  (0) {0};
-
-   \draw (2) edge[bend left] node[yshift=3mm]{$2$} (1);
-   \draw (1) edge[bend left] node[yshift=-3mm]{$\lambda$}(2);
-   \draw (1) edge[left] node[xshift=3mm, yshift=-3mm]{$1$} (0);
-
-\end{tikzpicture}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}{Contact Process $n = 2$ Phase-type distribution}
-$$
-    \mathbf{S} = \begin{pmatrix}
-        -2 & 2\\
-        \lambda & - (1 + \lambda)
-    \end{pmatrix}, \quad
-    \mathbf{S}_0 = \begin{pmatrix}
-        0\\
-        1
-    \end{pmatrix}, \quad
-    \boldsymbol{\alpha} = \begin{pmatrix}
-    1 & 0
-    \end{pmatrix}
-$$
-then
-\begin{align*}
- f(x; \lambda) &= \boldsymbol{\alpha} \exp(x \mathbf{S}) \mathbf{S}_0\\
- &= \frac{2}{C} \left( e^{\frac{1}{2}(-3 - \lambda + C) x} - e^{\frac{1}{2}(-3 - \lambda - C) x} \right)
-\end{align*}
-where
-$$
-C = \sqrt{\lambda^2 + 6 \lambda + 1}
-$$
-\end{frame}
-
-\begin{frame}{Contact process 2 node Phase-type density}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.80\textwidth]{figures/complete_2_contact_phase_densities.png}
-   \caption{Density functions for $\tau_{K_2}$ for $\lambda = 0, 1, 2, 3, 4$}
-  \label{fig:contact_2_phase_densities}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Contact process 2 nodes}
-We can express $\tau_{K_2}$ as a random sum
-$$
-\tau_{K_2} = \sum_{i = 1}^N (X_i + Y_i)
-$$
-where 
-\begin{itemize}
-    \item $X_1, X_2, \ldots$ be i.i.d random variables with
-$X_i \sim \exp(2)$ for the waiting time at state 2
-    \item $Y_1, Y_2, \ldots$ with  $Y_i \sim \exp(1 + \lambda)$ (independent of $(X_n)$
-    \item $N$ is independent of both $(X_n)$ and $(Y_n)$
-    \item $\tau_{K_2} \Rightarrow \infty$ as $\lambda \to \infty$
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Limiting Distribution}
-$$
-\tau_{K_2} = \sum_{i = 1}^N X_i +  \sum_{i = 1}^N  Y_i
-$$
-where
-$$
-X_i \sim \exp(2),\quad Y_i \sim \exp(1 + \lambda),\quad N \sim \operatorname{Geom}\left(\frac{1}{1 + \lambda}\right)
-$$
-
-\begin{align*}
-    \sum_{i = 1}^N X_i &\sim \exp\left( \frac{2}{1 + \lambda} \right) && \frac{2}{1 + \lambda}\sum_{i = 1}^N X_i \sim \exp( 1 ) \\
-    \sum_{i = 1}^N Y_i &\sim \exp( 1 ) &&\frac{2}{1 + \lambda}\sum_{i = 1}^N Y_i \sim \exp \left( \frac{1 + \lambda}{2} \right) \Rightarrow 0
-\end{align*}
-as $\lambda \to \infty$. Therefore
-$$
-\frac{2}{1 + \lambda} \tau_{K_2} \Rightarrow \exp(1) \text{ as } \lambda \to \infty
-$$
-
-\end{frame}
-
-\begin{frame}{Contact process 3 node phase-type density}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.80\textwidth]{figures/complete_3_contact_phase_densities.png}
-   \caption{Density functions for $\tau_{K_3}$ for $\lambda = 0, 1, 2, 3, 4$ on the complete three node contact process}
-  \label{fig:contact_3_phase_densities}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Contact process $n$ node}
-    \begin{figure}[H]
-    \centering
-   \begin{tikzpicture}[
-   start chain = going right,
-   -Triangle,
-   every loop/.append style = {-Triangle}]
-   \node[state, on chain]  (n) {n};
-   \node[state, on chain]  (n1) {n - 1};
-   \node[state without output/.append style={draw=none}, on chain]  (dots1) {...};
-   \node[state, on chain]  (2) {2};
-   \node[state, on chain]  (1) {1};
-   \node[state, on chain]  (0) {0};
-
-   \draw (n) edge[bend left] node[yshift=3mm]{$n$} (n1);
-   \draw (n1) edge[bend left] node[yshift=-3mm]{$1 (n - 1) \lambda$}(n);
-
-
-   \draw (n1) edge[left] node[xshift=3mm, yshift=-3mm]{} (dots1);
-
-   \draw (dots1) edge[left] node[xshift=3mm, yshift=-3mm]{} (2);
-
-  \draw (2) edge[bend left] node[yshift=3mm]{$2$} (1);
-   \draw (1) edge[bend left] node[yshift=-3mm]{$(n - 1)1 \lambda$}(2);
-
-  \draw (1) edge[left] node[yshift=3mm]{$1$} (0);
-\end{tikzpicture}
-    \caption{Transition rates for N node complete contact process}
-    \label{fig:complete_contact_n_node_rates}
-\end{figure}
-
-\begin{align*}
-    i \to i - 1 &= \begin{cases}
-        0 & i \in 0\\
-        i & i \in \{1,\ldots, n\}
-    \end{cases}\\
-    i \to i + 1 &= \begin{cases}
-        0 & i = i \in \{0, n\}\\
-        i(n - i) \lambda & i \in \{1,\ldots, n-1\}
-    \end{cases}
-\end{align*}
-\end{frame}
-
-\begin{frame}{Contact Process Limiting Distribution}
-    Let $\tau_{K_n}$ be the time until we reach state zero.
-Now let $N_1, N_2, \ldots, N_n$ be the number of visits to states $1, 2, \ldots, n$ respectively.
-
-For all $i = 1,2,\ldots, N_i$, $j = 1,2,\ldots, n$ and let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting times at each state.
-
-Since we are concerned with the limiting distribution we can instead focus on the rates up to a constant
-$$
-E[X_i^{(j)}] = E[X^{(j)}] \propto \begin{cases}
-  1 & j = n\\
-  \frac{1}{1 + \lambda} & j \in \{1,\ldots, k - 1\}\\
-\end{cases}
-$$
-\end{frame}
-
-\begin{frame}{Contact Process Limiting Distribution}
-We can again represent $\tau_{K_n}$ as random sums
-
-\begin{equation*}\label{eq:wait_contact_sum}
-    \tau_{K_n} = \sum_{i = 1}^{N_n} X_i^{(n)} + \sum_{i = 1}^{N_{n - 1}} X_i^{(n - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}
-\end{equation*}
-
-Then the limiting distribution as $\lambda \to \infty$ is
-$$
-\frac{\tau_{K_n}}{E[N_{n}]E[X^{(n)}]} \Rightarrow \exp(1)
-$$
 \end{frame}
 
 \begin{frame}[standout]
