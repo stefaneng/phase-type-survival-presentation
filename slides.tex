@@ -572,6 +572,16 @@ $$
 \end{figure}
 \end{frame}
 
+\begin{frame}{Contact process 2 node phase-type hazard function}
+The hazard function converges to the smallest absolute value of the non-zero eigenvalues of the matrix $S$. In this case: 0.58
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.80\textwidth]{figures/complete_2_contact_hazard_pi.png}
+   \caption{Hazard functions for $\tau_{K_2}$ when starting at state 2 and state 1.}
+  \label{fig:contact_2_phase_densities}
+\end{figure}
+\end{frame}
+
 \begin{frame}{Contact process 2 nodes}
 We can express $\tau_{K_2}$ as a random sum
 $$
@@ -604,7 +614,6 @@ as $\lambda \to \infty$. Therefore
 $$
 \frac{2}{1 + \lambda} \tau_{K_2} \Rightarrow \exp(1) \text{ as } \lambda \to \infty
 $$
-
 \end{frame}
 
 \begin{frame}{Contact process 3 node phase-type density}
@@ -612,7 +621,15 @@ $$
   \centering
     \includegraphics[width=.80\textwidth]{figures/complete_3_contact_phase_densities.png}
    \caption{Density functions for $\tau_{K_3}$ for $\lambda = 0, 1, 2, 3, 4$ on the complete three node contact process}
-  \label{fig:contact_3_phase_densities}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Contact process 3 node phase-type hazard function}
+The hazard function converges to the smallest non-zero absolute value of the eigenvalues which is 0.66 for the 3 nodes complete contact process.
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.80\textwidth]{figures/complete_3_contact_hazard_pi.png}
+      \caption{Hazard functions for $\tau_{K_3}$ when starting at states 3, 2 and 1.}
 \end{figure}
 \end{frame}
 
@@ -690,65 +707,73 @@ $$
 \section{Voter Model}
 
 \begin{frame}{Voter Model}
-\begin{itemize}
-    \item The voter model is a continuous-time Markov chain
-    \item Let $G = (V,E)$ be a graph with finite or countably infinite vertices (such as $\Z^d$)
-    \item The state space is $S = \{0,1\}^{V}$
-    \item Let $P$ be a transition probability matrix for a Markov chain on $G$
-    \item We assume that for all $x,y \in V$
-    $$
-    P(x,y) = \frac{1}{\deg(y)}
-    $$
-\end{itemize}
+    The Voter Model is another interacting particle system which can be thought of as people having opinions on a subject (such as an election).
+
+    Each person waits an exponentially distributed time with rate 1 and selects a random neighbor to conform to their opinion.
+    
+    The dynamics of the system are not changed by interchanging 1 and 0 so we still have a single absorbing state when the system is either all 1's or all 0's.
 \end{frame}
+% \begin{frame}{Voter Model}
+% \begin{itemize}
+%     \item The voter model is a continuous-time Markov chain
+%     \item Let $G = (V,E)$ be a graph with finite or countably infinite vertices (such as $\Z^d$)
+%     \item The state space is $S = \{0,1\}^{V}$
+%     \item Let $P$ be a transition probability matrix for a Markov chain on $G$
+%     \item We assume that for all $x,y \in V$
+%     $$
+%     P(x,y) = \frac{1}{\deg(y)}
+%     $$
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}{Voter Model}
-For $\eta \in S$ denote $\eta(x)$ as the value of the node $x \in V$ in the configuration $\eta$.
+% \begin{frame}{Voter Model}
+% For $\eta \in S$ denote $\eta(x)$ as the value of the node $x \in V$ in the configuration $\eta$.
 
-Let $\eta_x$ be the configuration obtained by changing the value of $\eta$ at the site $x$. That is,
-$$
-\eta_x(y) = \begin{cases}
-    \eta(y) & x \not = y\\
-    1 - \eta(y) & x = y
-\end{cases}
-$$
-\end{frame}
-
-\begin{frame}{Voter Model}
-If $S$ is a finite then $\eta$ transitions to $\eta_x$ at a rate of
-$$
-q(\eta, \eta_x) = \sum_{y : \eta(y) \not = \eta(x)} P(x,y)
-$$
-Thus, for any $\eta, \delta \in S$ that differ by more than one sites,
-$$
-q(\eta, \delta) = 0
-$$
-
-Each site $x \in S$ waits an exponentially distributed time with rate 1 and selects a random neighbor to conform to their opinion. 
-
-
-% and $\eta \in S$ transitions to $\delta \in S$ with probability
+% Let $\eta_x$ be the configuration obtained by changing the value of $\eta$ at the site $x$. That is,
 % $$
-% P^\eta(\eta_t = \delta) = q(\eta, \delta) t + o(t)
+% \eta_x(y) = \begin{cases}
+%     \eta(y) & x \not = y\\
+%     1 - \eta(y) & x = y
+% \end{cases}
 % $$
-% as $t \downarrow 0$.
-\end{frame}
+% \end{frame}
 
-\begin{frame}{Voter Model Transitions}
-    \begin{figure}[H]
-  \centering
-    \includegraphics[width=.80\textwidth]{figures/voter_model_config_example.png}
-\end{figure}
-\end{frame}
+% \begin{frame}{Voter Model}
+% If $S$ is a finite then $\eta$ transitions to $\eta_x$ at a rate of
+% $$
+% q(\eta, \eta_x) = \sum_{y : \eta(y) \not = \eta(x)} P(x,y)
+% $$
+% Thus, for any $\eta, \delta \in S$ that differ by more than one sites,
+% $$
+% q(\eta, \delta) = 0
+% $$
 
-\begin{frame}
-The transition rates have the following properties:
-\begin{enumerate}
-    \item $q(\eta, \eta_x) = 0$ for each $x \in \Z^d$ if $\eta \equiv 0$ or $\eta \equiv 1$
-    \item $q(\eta, \eta_x) = q(\zeta, \zeta_x)$ for every $x \in \Z^d$ if $\eta(y) + \zeta(y) = 1$ for all $y \in \Z^d$. That is, the dynamics of the system are not changed by interchanging 1 and 0.
-    \item On a finite graph eventually the graph will be either $\equiv 0$ or $\equiv 1$.
-\end{enumerate}
-\end{frame}
+% Each site $x \in S$ waits an exponentially distributed time with rate 1 and selects a random neighbor to conform to their opinion. 
+
+
+% % and $\eta \in S$ transitions to $\delta \in S$ with probability
+% % $$
+% % P^\eta(\eta_t = \delta) = q(\eta, \delta) t + o(t)
+% % $$
+% % as $t \downarrow 0$.
+% \end{frame}
+
+% \begin{frame}{Voter Model Transitions}
+%     Equivalently, each person waits an exponential time proportional to the number of people in disagreement and takes their opinion.
+%     \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.80\textwidth]{figures/voter_model_config_example.png}
+% \end{figure}
+% \end{frame}
+
+% \begin{frame}
+% The transition rates have the following properties:
+% \begin{enumerate}
+%     \item $q(\eta, \eta_x) = 0$ for each $x \in \Z^d$ if $\eta \equiv 0$ or $\eta \equiv 1$
+%     \item $q(\eta, \eta_x) = q(\zeta, \zeta_x)$ for every $x \in \Z^d$ if $\eta(y) + \zeta(y) = 1$ for all $y \in \Z^d$. That is, the dynamics of the system are not changed by interchanging 1 and 0.
+%     \item On a finite graph eventually the graph will be either $\equiv 0$ or $\equiv 1$.
+% \end{enumerate}
+% \end{frame}
 
 \begin{frame}{Voter Model Simulation on $Z$}
 \begin{figure}[H]
@@ -768,17 +793,17 @@ The transition rates have the following properties:
 % \end{figure}
 % \end{frame}
 
-\begin{frame}{Voter Model on Complete Graph}
-    \begin{itemize}
-        \item In the complete graph each node in a configuration is connected to all of the others
-        \item Project a configuration $\eta$ to the minimum number of 1's in $\eta$ and $1 - \eta$.
-        $$
-        \eta \mapsto \min\left(|\{x : \eta(x) = 1\}|, |\{x : \eta(x) = 0\}|  \right)
-        $$
-        \item We then have a new Markov chain with $\lfloor n/2 \rfloor + 1$ projected states.
-        \item Denote the complete graph with $i$ nodes as $K_i$
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Voter Model on Complete Graph}
+%     \begin{itemize}
+%         \item In the complete graph each node in a configuration is connected to all of the others
+%         \item Project a configuration $\eta$ to the minimum number of 1's in $\eta$ and $1 - \eta$.
+%         $$
+%         \eta \mapsto \min\left(|\{x : \eta(x) = 1\}|, |\{x : \eta(x) = 0\}|  \right)
+%         $$
+%         \item We then have a new Markov chain with $\lfloor n/2 \rfloor + 1$ projected states.
+%         \item Denote the complete graph with $i$ nodes as $K_i$
+%     \end{itemize}
+% \end{frame}
 
 \begin{frame}{Voter Model Simulation on Complete Graph}
 \begin{figure}[H]
@@ -789,175 +814,194 @@ The transition rates have the following properties:
 \end{figure}
 \end{frame}
 
-\begin{frame}{Voter Model Projection $n = 2$}
-    \begin{figure}[H]
-  \centering
-    \includegraphics[width=.8\textwidth]{figures/voter_model_proj_2.png}
-   \caption{Projection for voter model with $n = 2$}
-  \label{fig:voter_sim_1d_torus.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Voter Model Projection $n = 3$}
-    \begin{figure}[H]
-  \centering
-    \includegraphics[width=.8\textwidth]{figures/voter_model_proj_3.png}
-   \caption{Projection for voter model with $n = 3$}
-  \label{fig:voter_sim_1d_torus.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Voter Model Complete Graph $n = 2,3$}
-    \begin{itemize}
-        \item A complete graph (or a cycle) with $n = 2$ or $n = 3$.
-        \item Two projected states, $\{0,1\}$
-        \item When $n = 2$, both nodes can change from $1 \to 0$, and $0 \to 1$, each at a rate of $1$ for a total rate of $2$.
-        \item When $n = 3$, then the one node that is different from the others can switch to agree with the others. It is connected to 2 other nodes each with a rate of $1/2$ for a total rate of 1.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Voter Model Complete Graph $n = 4$}
+\begin{frame}{Voter Model Results}
 \begin{itemize}
-    \item The state space in the projected four node voter model is $\{0,1,2\}$.
-    % \item When we are in state 2 all nodes can switch from 1 to 0 or 0 to 1 to go to state 1.
-    % \item Each of these switch at a rate of $2 \cdot 1/(4 - 1) = 2/3$ since they are connected to 2 other nodes with the opposite value. Thus, the rate from $2 \to 1$ is $8/3$.
-    \item The rates are summarized in the form of the infinitesimal generator matrix
-
-$$
-Q_{K_4} = \begin{blockarray}{cccc}
-    & 2 & 1 & 0\\
-    \begin{block}{c|ccc}
-        \cline{2-4}
-        2 & -\frac{8}{3} & \frac{8}{3} & 0 \\
-        1 & 1 & -2 & 1\\
-        0 & 0 & 0 & 0\\
-    \end{block}
-\end{blockarray}
-$$
+    \item Phase-type distributions were computed exactly complete graph for $n = 2, 3, 4$
+    \item In the general case for finite $n$, a closed form for the expected value of the phase-type distribution.
+    \item 
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n = 4$}
-Now we can use the Phase-type distribution theory.
-Let
-    \begin{align*}
-    \mathbf{S} &= \begin{bmatrix}
-    -\frac{8}{3} & \frac{8}{3}\\
-    1 & -2\\
-    \end{bmatrix}\\
-    \mathbf{S}_0 &= (0, 1)^T
-\end{align*}
+% \begin{frame}{Voter Model Projection $n = 2$}
+%     \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.8\textwidth]{figures/voter_model_proj_2.png}
+%   \caption{Projection for voter model with $n = 2$}
+%   \label{fig:voter_sim_1d_torus.png}
+% \end{figure}
+% \end{frame}
 
-The diagonalization of $S$ is
-$$
-\mathbf{S} = \frac{1}{10} \begin{bmatrix}
-    -2 & 4/3\\
-    1 & 1
-\end{bmatrix} \operatorname{diag}(-4x, - \frac{2}{3} x)
- \begin{bmatrix}
-    -3 & 4\\
-    3 & 6
-\end{bmatrix}
-$$
-\end{frame}
+% \begin{frame}{Voter Model Projection $n = 3$}
+%     \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.8\textwidth]{figures/voter_model_proj_3.png}
+%   \caption{Projection for voter model with $n = 3$}
+%   \label{fig:voter_sim_1d_torus.png}
+% \end{figure}
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n = 4$}
-    Let $(\alpha_2, \alpha_1)$ be the probability of starting in state 2 and 1 respectively.
-    The density of the absorption time $\tau_{K_4}$ is given as
-\begin{align*}
-    f_{K_4}(x) &= (\alpha_2, \alpha_1) \exp(x\mathbf{S}) \mathbf{S}_0\\
-    &= \frac{1}{5} \left[ \alpha_2 \left( -4 e^{-4x} + 4 e^{-\frac{2}{3} x} \right) + \alpha_1 \left( 2 e^{-4x} + 3 e^{-\frac{2}{3} x} \right) \right]\\
-&= \frac{1}{5} \left[ (-4 \alpha_2 + 2 \alpha_1) e^{-4x} + (4 \alpha_2 + 3 \alpha_1) e^{-\frac{2}{3} x}\right]
-\end{align*}
-\end{frame}
+% \begin{frame}{Voter Model Complete Graph $n = 2,3$}
+%     \begin{itemize}
+%         \item A complete graph (or a cycle) with $n = 2$ or $n = 3$.
+%         \item Two projected states, $\{0,1\}$
+%         \item When $n = 2$, both nodes can change from $1 \to 0$, and $0 \to 1$, each at a rate of $1$ for a total rate of $2$.
+%         \item When $n = 3$, then the one node that is different from the others can switch to agree with the others. It is connected to 2 other nodes each with a rate of $1/2$ for a total rate of 1.
+%     \end{itemize}
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n = 4$}
-    The expected value of $\tau_{K_4}$ is then
-\begin{align*}
-    E[\tau_{K_4}] &= -1 (\alpha_2, \alpha_1) \mathbf{S}^{-1} (1, 1)^T\\
-    &= \frac{1}{8} (\alpha_2, \alpha_1) \begin{bmatrix}
-    6 & 8\\
-    3 & 8
-    \end{bmatrix} (1,1)^T\\
-    &= \frac{7}{4} \alpha_2 + \frac{11}{8} \alpha_1
-\end{align*}
-\end{frame}
+% \begin{frame}{Voter Model Complete Graph $n = 4$}
+% \begin{itemize}
+%     \item The state space in the projected four node voter model is $\{0,1,2\}$.
+%     % \item When we are in state 2 all nodes can switch from 1 to 0 or 0 to 1 to go to state 1.
+%     % \item Each of these switch at a rate of $2 \cdot 1/(4 - 1) = 2/3$ since they are connected to 2 other nodes with the opposite value. Thus, the rate from $2 \to 1$ is $8/3$.
+%     \item The rates are summarized in the form of the infinitesimal generator matrix
 
-\begin{frame}{Phase Type Distribution Voter Model $n = 4$}
-    \begin{figure}[H]
-  \centering
-    \includegraphics[width=.9\textwidth]{figures/voter_density_c4.png}
-   \caption{Density of the absorption time for the voter model on the complete graph with four nodes, $K_4$.}
-  \label{fig:voter_density_c4}
-\end{figure}
-\end{frame}
+% $$
+% Q_{K_4} = \begin{blockarray}{cccc}
+%     & 2 & 1 & 0\\
+%     \begin{block}{c|ccc}
+%         \cline{2-4}
+%         2 & -\frac{8}{3} & \frac{8}{3} & 0 \\
+%         1 & 1 & -2 & 1\\
+%         0 & 0 & 0 & 0\\
+%     \end{block}
+% \end{blockarray}
+% $$
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
-    \begin{itemize}
-        \item If $n$ is even, then let $k = n / 2$ and if $n$ is odd then let $k = (n - 1)/2$.
-        \item We have $\{0,\ldots, k\}$ projected states.
-    \end{itemize}
+% \begin{frame}{Phase Type Distribution Voter Model $n = 4$}
+% Now we can use the Phase-type distribution theory.
+% Let
+%     \begin{align*}
+%     \mathbf{S} &= \begin{bmatrix}
+%     -\frac{8}{3} & \frac{8}{3}\\
+%     1 & -2\\
+%     \end{bmatrix}\\
+%     \mathbf{S}_0 &= (0, 1)^T
+% \end{align*}
 
-The rates are summarized follows:
-\begin{align*}
-    i \to i - 1 &= \begin{cases}
-        0 & i = 0\\
-        \frac{nk}{n - 1}  & i = k, n \text{ even}\\
-        \frac{k (n - k)}{n - 1} & i = k, n \text{ odd}\\
-        \frac{i (n - i)}{n - 1}  & i \in \{1,\ldots, k - 1\}
-    \end{cases}\\
-    i \to i + 1 &= \begin{cases}
-        0 & i \in \{0, k\}\\
-        \frac{i (n - i)}{n - 1}  & i \in \{1,\ldots, k - 1\}
-    \end{cases}
-\end{align*}
-The embedded discrete Markov chain is just a simple random walk on $\{0,\ldots, k\}$ where 0 is absorbing and $k$ reflects back.
-\end{frame}
+% The diagonalization of $S$ is
+% $$
+% \mathbf{S} = \frac{1}{10} \begin{bmatrix}
+%     -2 & 4/3\\
+%     1 & 1
+% \end{bmatrix} \operatorname{diag}(-4x, - \frac{2}{3} x)
+%  \begin{bmatrix}
+%     -3 & 4\\
+%     3 & 6
+% \end{bmatrix}
+% $$
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
-   Let $N_1, N_2, \ldots, N_k$ be the number of visits to states $1, 2, \ldots, k$ respectively, which are geometrically distributed.
+% \begin{frame}{Phase Type Distribution Voter Model $n = 4$}
+%     Let $(\alpha_2, \alpha_1)$ be the probability of starting in state 2 and 1 respectively.
+%     The density of the absorption time $\tau_{K_4}$ is given as
+% \begin{align*}
+%     f_{K_4}(x) &= (\alpha_2, \alpha_1) \exp(x\mathbf{S}) \mathbf{S}_0\\
+%     &= \frac{1}{5} \left[ \alpha_2 \left( -4 e^{-4x} + 4 e^{-\frac{2}{3} x} \right) + \alpha_1 \left( 2 e^{-4x} + 3 e^{-\frac{2}{3} x} \right) \right]\\
+% &= \frac{1}{5} \left[ (-4 \alpha_2 + 2 \alpha_1) e^{-4x} + (4 \alpha_2 + 3 \alpha_1) e^{-\frac{2}{3} x}\right]
+% \end{align*}
+% \end{frame}
+
+% \begin{frame}{Phase Type Distribution Voter Model $n = 4$}
+%     The expected value of $\tau_{K_4}$ is then
+% \begin{align*}
+%     E[\tau_{K_4}] &= -1 (\alpha_2, \alpha_1) \mathbf{S}^{-1} (1, 1)^T\\
+%     &= \frac{1}{8} (\alpha_2, \alpha_1) \begin{bmatrix}
+%     6 & 8\\
+%     3 & 8
+%     \end{bmatrix} (1,1)^T\\
+%     &= \frac{7}{4} \alpha_2 + \frac{11}{8} \alpha_1
+% \end{align*}
+% \end{frame}
+
+% \begin{frame}{Phase Type Distribution Voter Model $n = 4$}
+%     \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.9\textwidth]{figures/voter_density_c4.png}
+%   \caption{Density of the absorption time for the voter model on the complete graph with four nodes, $K_4$.}
+%   \label{fig:voter_density_c4}
+% \end{figure}
+% \end{frame}
+
+% \begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
+%     \begin{itemize}
+%         \item If $n$ is even, then let $k = n / 2$ and if $n$ is odd then let $k = (n - 1)/2$.
+%         \item We have $\{0,\ldots, k\}$ projected states.
+%     \end{itemize}
+
+% The rates are summarized follows:
+% \begin{align*}
+%     i \to i - 1 &= \begin{cases}
+%         0 & i = 0\\
+%         \frac{nk}{n - 1}  & i = k, n \text{ even}\\
+%         \frac{k (n - k)}{n - 1} & i = k, n \text{ odd}\\
+%         \frac{i (n - i)}{n - 1}  & i \in \{1,\ldots, k - 1\}
+%     \end{cases}\\
+%     i \to i + 1 &= \begin{cases}
+%         0 & i \in \{0, k\}\\
+%         \frac{i (n - i)}{n - 1}  & i \in \{1,\ldots, k - 1\}
+%     \end{cases}
+% \end{align*}
+% The embedded discrete Markov chain is just a simple random walk on $\{0,\ldots, k\}$ where 0 is absorbing and $k$ reflects back.
+% \end{frame}
+
+% \begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
+%   Let $N_1, N_2, \ldots, N_k$ be the number of visits to states $1, 2, \ldots, k$ respectively, which are geometrically distributed.
    
-$$
-E[N_i] = \begin{cases}
-    2i & 0 < i < k\\
-    k & i = k
-\end{cases}
-$$   
+% $$
+% E[N_i] = \begin{cases}
+%     2i & 0 < i < k\\
+%     k & i = k
+% \end{cases}
+% $$   
 
-For all $i = 1,2,\ldots, N_i$ and $j = 1,2,\ldots, k$, let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting time at each state.
+% For all $i = 1,2,\ldots, N_i$ and $j = 1,2,\ldots, k$, let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting time at each state.
 
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
-Assuming that we start in state $k$ we can represent $\tau_{K_n}$ as random sums
-$$
-    \tau_{K_n} = \sum_{i = 1}^{N_k} X_i^{(k)} + \sum_{i = 1}^{N_{k - 1}} X_i^{(k - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}
-$$
-Where $N_j$ is independent of $(X_i^{(j)})$ for each $j$ but these random sums are not independent of each other
-\end{frame}
+% \begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
+% Assuming that we start in state $k$ we can represent $\tau_{K_n}$ as random sums
+% $$
+%     \tau_{K_n} = \sum_{i = 1}^{N_k} X_i^{(k)} + \sum_{i = 1}^{N_{k - 1}} X_i^{(k - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}
+% $$
+% Where $N_j$ is independent of $(X_i^{(j)})$ for each $j$ but these random sums are not independent of each other
+% \end{frame}
 
-\begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
-    \begin{align*}
-    E[\tau_{K_n}] &= E\left[\sum_{i = 1}^{N_k} X_i^{(k)} + \sum_{i = 1}^{N_{k - 1}} X_i^{(k - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}\right]\\
-    &= E[N_k] E[X^{(k)}] + E[N_{k - 1}] E[X^{(k - 1)}] + \cdots + E[N_1]E[X_i^{(1)}]\\
-    &= k E[X^{(k)}] + \sum_{j = 1}^{k - 1} \frac{n - 1}{(n - j)}\\
-    &= \begin{cases}
-    (n - 1) \left[H_{n} - H_{n - k}\right] & n \text{ even}\\
-    (n - 1) \left[H_{n - 1} - H_{n - k - 1}\right] & n \text{ odd}
-    \end{cases}
-    \end{align*}
-Where $H_n$ is the $n$th harmonic number $H_n = \sum_{k = 1}^n \frac{1}{k}$
+% \begin{frame}{Phase Type Distribution Voter Model $n$ nodes}
+%     \begin{align*}
+%     E[\tau_{K_n}] &= E\left[\sum_{i = 1}^{N_k} X_i^{(k)} + \sum_{i = 1}^{N_{k - 1}} X_i^{(k - 1)} + \cdots + \sum_{i = 1}^{N_1} X_i^{(1)}\right]\\
+%     &= E[N_k] E[X^{(k)}] + E[N_{k - 1}] E[X^{(k - 1)}] + \cdots + E[N_1]E[X_i^{(1)}]\\
+%     &= k E[X^{(k)}] + \sum_{j = 1}^{k - 1} \frac{n - 1}{(n - j)}\\
+%     &= \begin{cases}
+%     (n - 1) \left[H_{n} - H_{n - k}\right] & n \text{ even}\\
+%     (n - 1) \left[H_{n - 1} - H_{n - k - 1}\right] & n \text{ odd}
+%     \end{cases}
+%     \end{align*}
+% Where $H_n$ is the $n$th harmonic number $H_n = \sum_{k = 1}^n \frac{1}{k}$
 
-For large $n$, $E[\tau_{K_n}] \approx ln(2) (n - 1)$ since $\lim_{n \to \infty} [H_n - ln(n)] = \gamma = 0.577$
+% For large $n$, $E[\tau_{K_n}] \approx ln(2) (n - 1)$ since $\lim_{n \to \infty} [H_n - ln(n)] = \gamma = 0.577$
+% \end{frame}
+
+\section{Biostatistics Connection}
+
+\begin{frame}{Survival Analysis}
+\begin{itemize}
+    \item Odd Aalen connected the theory of phase-type distributions with a focus on hazard rates in \cite{aalen1995}.
+    \item 
+\end{itemize}
 \end{frame}
 
 \section{Multi-State Models}
 
 \begin{frame}{Multi-State Models}
 \begin{itemize}
+
     \item Standard survival analysis assumes that the response is dichotomous.
     \item Multi-state models replace 
+    \item 
 \end{itemize}
 
 
@@ -967,8 +1011,8 @@ For large $n$, $E[\tau_{K_n}] \approx ln(2) (n - 1)$ since $\lim_{n \to \infty} 
   Questions?
 \end{frame}
 
-%\bibliographystyle{plainnat}
+\bibliographystyle{plainnat}
 %\bibliographystyle{abbrv}
 %\bibliographystyle{abbrvnat}
-%\bibliography{references}
+\bibliography{references}
 \end{document}
