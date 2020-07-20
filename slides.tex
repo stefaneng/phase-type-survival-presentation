@@ -572,6 +572,15 @@ $$
 \end{figure}
 \end{frame}
 
+\begin{frame}{Contact process 2 node survival function}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=.80\textwidth]{figures/complete_2_contact_survival.png}
+   \caption{Survival functions for $\tau_{K_2}$ for $\lambda = 0, 1, 2, 3, 4$}
+\end{figure}
+\end{frame}
+
+
 \begin{frame}{Contact process 2 node phase-type hazard function}
 The hazard function converges to the smallest absolute value of the non-zero eigenvalues of the matrix $S$. In this case: 0.58
 \begin{figure}[H]
@@ -585,7 +594,7 @@ The hazard function converges to the smallest absolute value of the non-zero eig
 \begin{frame}{Contact process 2 nodes}
 We can express $\tau_{K_2}$ as a random sum
 $$
-\tau_{K_2} = \sum_{i = 1}^N (X_i + Y_i)
+\tau_{K_2} = \sum_{i = 1}^N X_i + \sum_{i = 1}^N Y_i
 $$
 where 
 \begin{itemize}
