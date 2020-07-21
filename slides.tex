@@ -67,12 +67,12 @@ edge[every join]#1(\tikzchaincurrent)\fi}}}
 \newcommand{\xn}{\ensuremath{x_1,\ldots,x_n}}
 
 \title{Phase-Type Distributions for Finite Interacting Particle Systems}
-\subtitle{Master's Thesis}
+\subtitle{with Applications to Survival Analysis}
 \author{Stefan Eng\\
     Advisor: Jeff Steif
 }
 \institute{University of Gothenburg/Göteborgs Universitet}
-\date{June 9, 2020}
+\date{July 21, 2020}
 
 \begin{document}
 
@@ -94,11 +94,11 @@ edge[every join]#1(\tikzchaincurrent)\fi}}}
 \end{frame}
 
 \begin{frame}{Background}
-A random variable $N$ is \textbf{geometrically distributed} with parameter $p \in (0,1]$ if $N$ is a non-negative integer random variable with probability mass function
-$$
-P(N = n) = (1 - p)^{n - 1} p
-$$
-for $n \in \{1,2,\ldots\}$.
+% A random variable $N$ is \textbf{geometrically distributed} with parameter $p \in (0,1]$ if $N$ is a non-negative integer random variable with probability mass function
+% $$
+% P(N = n) = (1 - p)^{n - 1} p
+% $$
+% for $n \in \{1,2,\ldots\}$.
 
 A random variable $X \in [0, \infty)$ is \textbf{exponentially distributed} with rate $\lambda$ if it has a probability density function
 $$
@@ -106,6 +106,11 @@ f(x; \lambda) = \begin{cases}
     \lambda e^{-\lambda x} & x > 0\\
     0 & x \leq 0
     \end{cases}
+$$
+
+The expected value is 
+$$
+E[X] = \frac{1}{\lambda}
 $$
 \end{frame}
 
@@ -120,7 +125,7 @@ $$
     \begin{example}[Central Limit Theorem]
         Let $X_1, \ldots, X_n$ be i.i.d random variables with $E[X_i] = \mu$ and finite variance $\Var(X_i) = \sigma^2$. Then
         $$
-        {\frac {{\bar {X}}_{n}-\mu }{\sigma /\sqrt{n}}} \Rightarrow N(0, \sigma^2)
+        {\frac {{\bar {X}}_{n}-\mu }{\sigma /\sqrt{n}}} \Rightarrow N(0,1)
         $$
         as $n \to \infty$
     \end{example}
@@ -152,7 +157,7 @@ $$
    
    \node[node style] at (0, 0)     (2)     {Healthy};
    \node[node style] at (6, 0)     (1)     {Diseased};
-   \node[node style] at (3, -4) (0) {Dead};
+   \node[node style] at (3, -4) (0) {Death};
 
    \draw (2) edge[bend left] node[yshift=3mm]{$p_1$} (1);
    \draw (1) edge[bend left] node[yshift=-3mm]{$p_2$}(2);
@@ -196,7 +201,7 @@ for all $t_1, \ldots, t_n \in \mathbb T$, with $t_1 < \cdots < t_n$ and $i_1,\ld
 \end{frame}
 
 \begin{frame}{Graphical Representation of CTMC}
-A graphical representation of a continuous-time Markov chain representing the illness-death model.
+A graphical representation of a continuous-time Markov chain representing the illness-death model. The rates are $\lambda_1, \lambda_2, \lambda_3$.
     \begin{figure}[H]
     \centering
    \begin{tikzpicture}[start chain = going right,
@@ -310,17 +315,17 @@ where $A^0 = I$, the $n \times n$ identity matrix.
 \end{frame}
 
 
-\begin{frame}{Matrix Exponential}
-\begin{theorem} \label{thm:eigen_matrix_exp}
-Assume that $A$ is a diagonalizable $n \times n$ matrix with eigenvalues $\lambda_1, \lambda_2, \ldots, \lambda_n$.
-Let $A = T \Lambda T^{-1}$ be the eigendecomposition of $A$ where $T$ is the $n \times n$ matrix of the eigenvectors and $\Lambda = \operatorname{diag}(\lambda_1, \ldots, \lambda_n)$.
-Then,
-\begin{align*}
-    \exp(A) &= T \exp(\Lambda) T^{-1}\\
-    &= T \operatorname{diag}(\exp(\lambda_1), \ldots, \exp(\lambda_n)) T^{-1}
-\end{align*}
-\end{theorem}
-\end{frame}
+% \begin{frame}{Matrix Exponential}
+% \begin{theorem} \label{thm:eigen_matrix_exp}
+% Assume that $A$ is a diagonalizable $n \times n$ matrix with eigenvalues $\lambda_1, \lambda_2, \ldots, \lambda_n$.
+% Let $A = T \Lambda T^{-1}$ be the eigendecomposition of $A$ where $T$ is the $n \times n$ matrix of the eigenvectors and $\Lambda = \operatorname{diag}(\lambda_1, \ldots, \lambda_n)$.
+% Then,
+% \begin{align*}
+%     \exp(A) &= T \exp(\Lambda) T^{-1}\\
+%     &= T \operatorname{diag}(\exp(\lambda_1), \ldots, \exp(\lambda_n)) T^{-1}
+% \end{align*}
+% \end{theorem}
+% \end{frame}
 
 \section{Phase-type distributions}
 
@@ -395,24 +400,24 @@ The exponential distribution is a phase-type distribution:
 Let $\mathbf S = - \lambda$, $\mathbf{S}_0 = \lambda$ and $\boldsymbol{\alpha} = 1$.
 \end{frame}
 
-\begin{frame}{Example - Exponential Mixture}
-A mixture of 3 exponential distributions with rates $\lambda_1, \lambda_2, \lambda_3$ and weights $(\alpha_1, \alpha_2, \alpha_3)$ can be represented as a phase-type distribution:
-\begin{align*}
-    \mathbf S &= \begin{bmatrix}
-        -\lambda_1 & 0 & 0\\
-        0 & - \lambda_2 & 0\\
-        0 & 0 & - \lambda_3
-        \end{bmatrix}\\
-    \mathbf{S}_0 &= (\lambda_1, \lambda_2, \lambda_3)^T\\
-    \alpha &= (\alpha_1, \alpha_2, \alpha_3)
-\end{align*}
-\end{frame}
+% \begin{frame}{Example - Exponential Mixture}
+% A mixture of 3 exponential distributions with rates $\lambda_1, \lambda_2, \lambda_3$ and weights $(\alpha_1, \alpha_2, \alpha_3)$ can be represented as a phase-type distribution:
+% \begin{align*}
+%     \mathbf S &= \begin{bmatrix}
+%         -\lambda_1 & 0 & 0\\
+%         0 & - \lambda_2 & 0\\
+%         0 & 0 & - \lambda_3
+%         \end{bmatrix}\\
+%     \mathbf{S}_0 &= (\lambda_1, \lambda_2, \lambda_3)^T\\
+%     \alpha &= (\alpha_1, \alpha_2, \alpha_3)
+% \end{align*}
+% \end{frame}
 
 \begin{frame}{Example - Coxian Distribution}
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{figures/coxian_distribution.png}
-    \caption{Coxian Distribution with 5 transient states}
+    \caption{Coxian distribution with 5 transient states. The labels on the edges are the transition rates.}
 \end{figure}
 \end{frame}
 
@@ -463,18 +468,17 @@ $\mathbf{S}_0 = ((1 - p_1)\lambda_1, (1 - p_2)\lambda_2, \ldots, (1 - p_{k - 1})
     \item The contact process $(\eta_t)$, is a continuous-time Markov chain
     \item Let $G = (V,E)$ be a graph with finite or countably infinite vertices
     \item The state space is $S = \{0,1\}^V$
-    \item Infection rate $\lambda$
+    \item Infection rate $\lambda$, nodes with 1 are called "infected".
     % \item Each 1 on the graph waits an exponentially distributed random time with rate 1 and then becomes a 0.
     % \item Every 0 waits an exponentially distributed random time with rate $k \lambda$, where $k$ is the number of edges shared with a 1.
     % \item Project the contact process to the number of ones in the configuration
-    \item Denote the extinction/absorption time as $\tau_{G}$
+    \item Denote the extinction/absorption time as $\tau_{G}$ (which always occurs on finite graphs).
     \item If $S$ is finite, the transition rates can be described as follows
-$$
-q(\eta, \eta_x) = \begin{cases}
-    1 & \text{if } \eta(x) = 1\\
-    \lambda |\{ (x,y) \in E : \eta(y) = 1\}| & \text{if } \eta(x) = 0
-\end{cases}
-$$
+    \begin{align*}
+    1 &\to 0 \text{ at rate } 1\\
+    0 &\to 1 \text{ at rate }  \lambda K
+    \end{align*}
+    where $K$ is the number of infected neighbors.
 \end{itemize}
 
 \end{frame}
@@ -582,7 +586,7 @@ $$
 
 
 \begin{frame}{Contact process 2 node phase-type hazard function}
-The hazard function converges to the smallest absolute value of the non-zero eigenvalues of the matrix $S$. In this case: 0.58
+The hazard function converges to the smallest non-zero absolute value of the eigenvalues which is 0.58 for the 2 nodes complete contact process. 
 \begin{figure}[H]
   \centering
     \includegraphics[width=.80\textwidth]{figures/complete_2_contact_hazard_pi.png}
@@ -625,24 +629,24 @@ $$
 $$
 \end{frame}
 
-\begin{frame}{Contact process 3 node survival function}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.80\textwidth]{figures/complete_3_contact_survival.png}
-   \caption{Survival functions for $\tau_{K_3}$ for $\lambda = 0, 1, 2, 3, 4$ on the complete three node contact process}
-\end{figure}
-\end{frame}
+% \begin{frame}{Contact process 3 node survival function}
+% \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.80\textwidth]{figures/complete_3_contact_survival.png}
+%   \caption{Survival functions for $\tau_{K_3}$ for $\lambda = 0, 1, 2, 3, 4$ on the complete three node contact process}
+% \end{figure}
+% \end{frame}
 
-\begin{frame}{Contact process 3 node phase-type hazard function}
-The hazard function converges to the smallest non-zero absolute value of the eigenvalues which is 0.66 for the 3 nodes complete contact process.
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.80\textwidth]{figures/complete_3_contact_hazard_pi.png}
-      \caption{Hazard functions for $\tau_{K_3}$ when starting at states 3, 2 and 1.}
-\end{figure}
-\end{frame}
+% \begin{frame}{Contact process 3 node phase-type hazard function}
+% The hazard function converges to the smallest non-zero absolute value of the eigenvalues which is 0.66 for the 3 nodes complete contact process.
+% \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.80\textwidth]{figures/complete_3_contact_hazard_pi.png}
+%       \caption{Hazard functions for $\tau_{K_3}$ when starting at states 3, 2 and 1.}
+% \end{figure}
+% \end{frame}
 
-\begin{frame}{Contact process $n$ node}
+\begin{frame}{Contact process $n$ nodes}
     \begin{figure}[H]
     \centering
    \begin{tikzpicture}[
@@ -686,7 +690,7 @@ The hazard function converges to the smallest non-zero absolute value of the eig
 \end{frame}
 
 \begin{frame}{Contact Process Limiting Distribution}
-    Let $\tau_{K_n}$ be the time until we reach state zero.
+    
 Now let $N_1, N_2, \ldots, N_n$ be the number of visits to states $1, 2, \ldots, n$ respectively.
 
 For all $i = 1,2,\ldots, N_i$, $j = 1,2,\ldots, n$ and let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting times at each state.
@@ -814,20 +818,20 @@ $$
 %     \end{itemize}
 % \end{frame}
 
-\begin{frame}{Voter Model Simulation on Complete Graph}
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=.6\textwidth]{figures/voter_simulation_1d_complete_split_100.png}
-   \caption{Simulation for voter model on a complete graph with 100 nodes. The initial configuration is split with half 1's and half 0's.}
-  \label{fig:voter_sim_1d_complete.png}
-\end{figure}
-\end{frame}
+% \begin{frame}{Voter Model Simulation on Complete Graph}
+% \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=.6\textwidth]{figures/voter_simulation_1d_complete_split_100.png}
+%   \caption{Simulation for voter model on a complete graph with 100 nodes. The initial configuration is split with half 1's and half 0's.}
+%   \label{fig:voter_sim_1d_complete.png}
+% \end{figure}
+% \end{frame}
 
 \begin{frame}{Voter Model Results}
 \begin{itemize}
-    \item Phase-type distributions were computed exactly complete graph for $n = 2, 3, 4$
+    \item Phase-type distributions were computed exactly for the complete graph with $n = 2, 3, 4$.
+    \item Created simulations for 1 and 2 dimensional voter models on other graph configurations.
     \item In the general case for finite $n$, a closed form for the expected value of the phase-type distribution.
-    \item 
 \end{itemize}
 \end{frame}
 
@@ -998,26 +1002,41 @@ $$
 
 \begin{frame}{Survival Analysis}
 \begin{itemize}
-    \item Odd Aalen connected the theory of phase-type distributions with a focus on hazard rates in \cite{aalen1995}.
-    \item 
+    \item \cite{aalen1995} describes phase type distributions with a focus on hazard rates.
+    \item Multi-state models are time-to-event models where the response is a state from a Markov chain.
+    \item Generally there is one absorbing state so that we can use phase-type distribution theory.
 \end{itemize}
 \end{frame}
 
-\section{Multi-State Models}
-
-\begin{frame}{Multi-State Models}
-\begin{itemize}
-
-    \item Standard survival analysis assumes that the response is dichotomous.
-    \item Multi-state models replace 
-    \item 
-\end{itemize}
-
-
+\begin{frame}{Multiple models for survival data}
+    \begin{figure}
+        \centering
+        \includegraphics[width=.9\textwidth]{figures/multi-state_models.png}
+        \caption{Various Markov Chains for time-to-event data.}
+    \end{figure}
 \end{frame}
 
-\begin{frame}[standout]
-  Questions?
+\begin{frame}{Multi-state Models}
+    \begin{itemize}
+        \item Hazard rates are generalized to \textit{transition intensities} which is the instantaneous risk of transitioning between states $i \to j$
+    $$
+    \lambda_{ij}(t) = \lim_{dt \downarrow 0} \frac{P(T < t + dt | T \geq t)}{dt}
+    $$
+    \item A full overview of competing risks and multi-state models is available from \cite{putter2007}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Multi-state Model Fitting}
+    \begin{itemize}
+    \item \cite{msm} developed the \textit{msm} R package to fit multi-state models.
+    \begin{itemize}
+        \item Fits both time-homogeneous and inhomogeneous Markov models and well as hidden Markov models with individual or time-dependent covariates.
+    \end{itemize}
+    \item \cite{mstate} developed the \textit{mstate} R package for competing risks and multi-state models.
+    \begin{itemize}
+        \item Allows for non-Markov models such as semi-Markov and extended semi-Markov models (hazard from $i \to j$ can depend on time of arrival at state $i$)
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 \bibliographystyle{plainnat}
