@@ -71,12 +71,21 @@ edge[every join]#1(\tikzchaincurrent)\fi}}}
 \author{Stefan Eng\\
     Advisor: Jeff Steif
 }
-\institute{University of Gothenburg/Göteborgs Universitet}
+\institute{University of Gothenburg/Göteborgs Universitet, Sweden}
 \date{July 21, 2020}
 
 \begin{document}
 
 \maketitle
+
+\begin{frame}{Contributions}
+\begin{itemize}
+    \item Algebraic computations of phase-type distributions for the contact process and voter model on complete graph with $n = 2, 3, 4$ nodes as well as numeric computations of other graph configurations.
+    \item Limiting behavior for the absorption time of the contact process on a finite complete graph with $n$ nodes.
+    \item Algebraic computation of the expected value of the absorption time of voter model on a finite complete graph with $n$ nodes.
+    \item R package containing simulation code for interacting particle systems with different graph configurations as well as all visualizations.
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Table of contents}
   \setbeamertemplate{section in toc}[sections numbered]
@@ -115,15 +124,15 @@ $$
 \end{frame}
 
 \begin{frame}{Limiting Distribution}
-    \begin{defn}
-    If $X_n$ and $X$ are random variables with cumulative distribution functions $F_n$ and $F$ then $X_n$ approaches in distribution to $X$, notated $X_n \Rightarrow X$, if
+    \begin{defn}[Approaching in Distribution]
+    If $X_n$ and $X$ are random variables with cumulative distribution functions $F_n$ and $F$ then $X_n$ approaches $X$ \textit{in distribution}, notated $X_n \Rightarrow X$, if
     $$
     \lim_{n \to \infty} F_n(x) = F(x)
     $$
     \end{defn}  
     
     \begin{example}[Central Limit Theorem]
-        Let $X_1, \ldots, X_n$ be i.i.d random variables with $E[X_i] = \mu$ and finite variance $\Var(X_i) = \sigma^2$. Then
+        Let $X_1, \ldots, X_n$ be i.i.d random variables with $E[X_i] = \mu$ and finite variance $\Var(X_i) = \sigma^2$. Denote ${\bar {X}}_{n}$ as the sample mean. Then
         $$
         {\frac {{\bar {X}}_{n}-\mu }{\sigma /\sqrt{n}}} \Rightarrow N(0,1)
         $$
@@ -139,11 +148,19 @@ A stochastic process $(X_n)$ with countable or discrete state space $S$ is a (di
 P(X_{n + 1} = s | X_n = x, \ldots, X_0 = x_0) = P(X_{n + 1} = s | X_n = x)
 $$
 for all $n \geq 1$ and $s, x, x_{n-1}, \ldots, x_0 \in S$.
+\end{frame}
 
-and \textbf{time homogeneous} if
-$$
-P(X_{n + 1} = j | X_n = i) = P(X_{1} = j | X_0 = i)
-$$
+\begin{frame}{Time homogeneous Markov Chain}
+We say that a discrete-time Markov chain $(X_n)$ with state space $S$ is \textbf{time homogeneous} if
+    $$
+    P(X_{n + 1} = j | X_n = i) = P(X_{1} = j | X_0 = i) = \mathbf{P}(i,j) = p_{ij}
+    $$
+    where $\mathbf{P} = (p_{ij})$ is the $|S| \times |S|$ matrix of transition probabilities
+    $$
+    p_{ij} = P(X_{n + 1} = j | X_n = i)
+    $$
+    
+    All Markov chains in this presentation are assumed to be time homogeneous.
 \end{frame}
 
 \begin{frame}{Graphical Representation of Discrete Markov Chain}
@@ -169,7 +186,7 @@ $$
 \end{frame}
 
 \begin{frame}{Continuous-time Markov Chain}
-The process $(X(t))$ is a \textbf{continuous-time Markov chain} (CTMC) with index set $\mathbb T$ (assumed to be $[0, \infty)$) and finite or countable state space $S$ if
+The process $(X(t))$ is a \textbf{continuous-time Markov chain} (CTMC) with index set $[0, \infty)$ and finite or countable state space $S$ if
 $$
 P(X(t_n) = j | X(t_{n - 1}) = i_{n-1}, \ldots, X(t_1) = i_{1}) = P(X(t_n) = j | X(t_{n - 1}))% = i_{n - 1})
 $$
@@ -691,7 +708,7 @@ $$
 
 \begin{frame}{Contact Process Limiting Distribution}
     
-Now let $N_1, N_2, \ldots, N_n$ be the number of visits to states $1, 2, \ldots, n$ respectively.
+Now let $N_1, N_2, \ldots, N_n$ be the geometric number of visits to states $1, 2, \ldots, n$ respectively.
 
 For all $i = 1,2,\ldots, N_i$, $j = 1,2,\ldots, n$ and let $X_i^{(j)}$ be i.i.d random variables representing the exponential waiting times at each state.
 
@@ -1018,7 +1035,7 @@ $$
 
 \begin{frame}{Multi-state Models}
     \begin{itemize}
-        \item Hazard rates are generalized to \textit{transition intensities} which is the instantaneous risk of transitioning between states $i \to j$
+        \item Hazard rates are generalized to \textit{transition intensities} which is the instantaneous risk of transitioning between states $i \to j$. Let $T$ denote the time of transition from state $i$ to state $j$.
     $$
     \lambda_{ij}(t) = \lim_{dt \downarrow 0} \frac{P(T < t + dt | T \geq t)}{dt}
     $$
@@ -1037,6 +1054,10 @@ $$
         \item Allows for non-Markov models such as semi-Markov and extended semi-Markov models (hazard from $i \to j$ can depend on time of arrival at state $i$)
     \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+  Thank you
 \end{frame}
 
 \bibliographystyle{plainnat}
